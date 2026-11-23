@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ada kejutan kecil buat kamu</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#FFF1C9;--bg2:#FFD6C0;--ink:#3B2A4D;--card:#FFFFFFcc;--pink:#FF7DA8;--sun:#FFC83D;--mint:#8FDDBE;--sky:#8CCBFF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2B2150;--bg2:#4A2C5E;--ink:#FFF3E0;--card:#ffffff1f}}
+:root[data-theme="dark"]{--bg1:#2B2150;--bg2:#4A2C5E;--ink:#FFF3E0;--card:#ffffff1f}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:"Fredoka","Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2)) fixed;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10}
+.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.bg span{position:absolute;font-size:28px;opacity:.55;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-26px) rotate(8deg)}}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:5;width:100%;height:100%}
+main{position:relative;max-width:560px;margin:0 auto;padding:20px 18px 60px;text-align:center}
+.screen{display:none}.screen.on{display:block;animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+h1{font-size:clamp(28px,8vw,40px);line-height:1.15;margin:14px 0 8px;font-weight:600}
+h2{font-size:22px;margin:30px 0 10px;font-weight:600}
+p{font-size:18px;line-height:1.55;margin:6px auto;max-width:44ch}
+.btn{font:inherit;font-weight:500;font-size:18px;color:#3B2A4D;background:var(--sun);border:0;border-radius:999px;padding:14px 26px;margin:6px;cursor:pointer;box-shadow:0 6px 0 #D99A00;transition:transform .12s,box-shadow .12s}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #D99A00}
+.btn.pink{background:var(--pink);box-shadow:0 6px 0 #D5497B;color:#fff}
+.btn.pink:active{box-shadow:0 1px 0 #D5497B}
+.btn:focus-visible,.bal:focus-visible,.chk:focus-within,#cat:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+/* kado */
+#gift{width:200px;height:200px;margin:30px auto 10px;cursor:pointer;background:none;border:0;animation:wob 1.6s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) scale(1.05)}}
+#gift.open{animation:none;transform:scale(1.3);opacity:0;transition:.6s}
+/* kucing */
+#cat{display:block;width:230px;margin:6px auto 0;cursor:pointer;background:none;border:0;padding:0;animation:bounce 2.4s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes bounce{0%,100%{transform:translateY(0) scale(1,1)}45%{transform:translateY(-16px) scale(.98,1.03)}60%{transform:translateY(0) scale(1.04,.96)}}
+#cat.hop{animation:hop .6s}
+@keyframes hop{0%{transform:scale(1)}30%{transform:translateY(-40px) rotate(-8deg)}60%{transform:translateY(0) rotate(6deg) scale(1.06,.94)}100%{transform:none}}
+.blink{animation:blink 4s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.tail{transform-origin:12px 70px;animation:tail 1.2s ease-in-out infinite alternate}
+@keyframes tail{from{transform:rotate(-14deg)}to{transform:rotate(16deg)}}
+.bubble{position:relative;background:var(--card);backdrop-filter:blur(6px);border-radius:26px;padding:20px 22px;margin:14px auto 6px;min-height:118px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px #0002;max-width:480px}
+.bubble::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-14px;border:14px solid transparent;border-top:0;border-bottom-color:var(--card)}
+.bubble p{margin:0;font-size:19px;animation:pop .45s}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--ink);opacity:.25;transition:.3s}
+.dots i.on{opacity:1;background:var(--pink);transform:scale(1.3)}
+/* balon */
+.sky{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px;margin-top:8px}
+.bal{width:76px;height:96px;border-radius:50% 50% 48% 48%;border:0;cursor:pointer;position:relative;animation:sway 3s ease-in-out infinite;box-shadow:inset -8px -8px 0 #0001}
+.bal::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:22px;background:var(--ink);opacity:.4}
+.bal:nth-child(2n){animation-delay:-1s}.bal:nth-child(3n){animation-delay:-2s}
+@keyframes sway{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+.bal.pop{animation:none;transform:scale(1.5);opacity:0;transition:.25s}
+#balmsg{min-height:30px;font-size:20px;font-weight:600;margin-top:34px;color:var(--pink)}
+/* ceklis */
+.list{display:grid;gap:10px;max-width:420px;margin:0 auto;text-align:left}
+.chk{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:18px;padding:13px 16px;font-size:18px;cursor:pointer;transition:transform .15s}
+.chk:active{transform:scale(.97)}
+.chk input{width:24px;height:24px;accent-color:var(--pink);flex:none}
+.chk input:checked+span{text-decoration:line-through;opacity:.6}
+.sign{margin-top:36px;font-size:20px}
+.heart{position:fixed;font-size:26px;pointer-events:none;z-index:6;animation:up 2.2s ease-out forwards}
+@keyframes up{to{transform:translateY(-70vh) translateX(var(--dx)) scale(1.5) rotate(var(--r));opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<div class="bg" id="bg" aria-hidden="true"></div>
+<canvas id="cv" aria-hidden="true"></canvas>
+<main>
+
+<section class="screen on" id="s1">
+  <h1>Psst… ada kejutan kecil buat kamu</h1>
+  <p>Dari seseorang yang lagi jauh, tapi hatinya dekat banget sama kamu.</p>
+  <button id="gift" aria-label="Buka kado">
+    <svg viewBox="0 0 200 200" width="200" height="200">
+      <rect x="30" y="85" width="140" height="95" rx="12" fill="#FF7DA8"/>
+      <rect x="92" y="85" width="16" height="95" fill="#FFC83D"/>
+      <rect x="22" y="60" width="156" height="36" rx="12" fill="#FF9BBD"/>
+      <rect x="92" y="60" width="16" height="36" fill="#FFC83D"/>
+      <path d="M100 60 C70 15 40 40 100 60 C160 40 130 15 100 60Z" fill="#FFC83D"/>
+      <circle cx="75" cy="130" r="5" fill="#fff" opacity=".7"/><circle cx="135" cy="150" r="5" fill="#fff" opacity=".7"/>
+    </svg>
+  </button>
+  <button class="btn" id="openBtn">Buka kadonya</button>
+</section>
+
+<section class="screen" id="s2">
+  <h1 id="hello">Halo! Aku Mochi</h1>
+  <p>Aku dititipin buat nemenin kamu hari ini. Colek aku ya!</p>
+  <button id="cat" aria-label="Colek Mochi">
+    <svg viewBox="0 0 240 230" width="230">
+      <ellipse cx="120" cy="222" rx="70" ry="7" fill="#0002"/>
+      <path class="tail" d="M185 190 C235 190 235 130 205 125" stroke="#FFA94D" stroke-width="16" fill="none" stroke-linecap="round" style="transform-origin:185px 190px"/>
+      <ellipse cx="120" cy="175" rx="62" ry="46" fill="#FFB85C"/>
+      <ellipse cx="120" cy="188" rx="34" ry="30" fill="#FFE8C2"/>
+      <ellipse cx="88" cy="215" rx="16" ry="9" fill="#FFB85C"/><ellipse cx="152" cy="215" rx="16" ry="9" fill="#FFB85C"/>
+      <path d="M52 78 L60 22 L102 52Z" fill="#FFB85C"/><path d="M188 78 L180 22 L138 52Z" fill="#FFB85C"/>
+      <path d="M64 62 L66 38 L88 54Z" fill="#FF9BBD"/><path d="M176 62 L174 38 L152 54Z" fill="#FF9BBD"/>
+      <ellipse cx="120" cy="100" rx="76" ry="62" fill="#FFB85C"/>
+      <path d="M120 40 v18 M104 44 l4 14 M136 44 l-4 14" stroke="#E58A2B" stroke-width="6" stroke-linecap="round"/>
+      <g class="blink"><ellipse cx="92" cy="98" rx="9" ry="12" fill="#3B2A4D"/><ellipse cx="148" cy="98" rx="9" ry="12" fill="#3B2A4D"/>
+      <circle cx="95" cy="93" r="3.5" fill="#fff"/><circle cx="151" cy="93" r="3.5" fill="#fff"/></g>
+      <ellipse cx="70" cy="118" rx="12" ry="8" fill="#FF7DA8" opacity=".6"/><ellipse cx="170" cy="118" rx="12" ry="8" fill="#FF7DA8" opacity=".6"/>
+      <path d="M113 115 h14 l-7 8z" fill="#E0507F"/>
+      <path d="M120 123 q-10 14 -22 4 M120 123 q10 14 22 4" stroke="#3B2A4D" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M50 108 l-26 -6 M50 118 l-26 4 M190 108 l26 -6 M190 118 l26 4" stroke="#3B2A4D" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+    </svg>
+  </button>
+  <div class="bubble"><p id="say">Colek aku buat dengerin pesan hangat!</p></div>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <div style="margin-top:14px">
+    <button class="btn" id="next">Pesan berikutnya</button>
+    <button class="btn pink" id="hug">Kirim pelukan</button>
+  </div>
+
+  <h2>Pecahin balon, ada kata manis di dalamnya</h2>
+  <div class="sky" id="sky"></div>
+  <div id="balmsg" aria-live="polite"></div>
+
+  <h2>Daftar kecil buat hari ini</h2>
+  <div class="list" id="list"></div>
+
+  <p class="sign" id="sign"></p>
+  <button class="btn" id="party">Rayakan kamu</button>
+</section>
+
+</main>
+<script>
+// ====== UBAH DI SINI ======
+var NAMA_PENERIMA = "";   // contoh: "Dinda" (boleh dikosongkan)
+var NAMA_PENGIRIM = "";   // contoh: "Rafi" (boleh dikosongkan)
+// ==========================
+
+var $ = function(id){return document.getElementById(id)};
+var msgs = [
+ "Hei, kamu nggak sendirian. Ada banyak orang yang sayang banget sama kamu, termasuk aku.",
+ "Boleh kok kangen. Boleh juga ketawa. Dua-duanya bisa jalan bareng, dan itu sama sekali nggak salah.",
+ "Orang yang kamu sayang pasti pengen lihat kamu tersenyum lagi. Pelan-pelan aja, nggak perlu buru-buru.",
+ "Hari ini nggak harus sempurna. Cukup minum air, makan yang enak, dan peluk dirimu sendiri.",
+ "Cinta yang pernah kamu kasih itu nggak ke mana-mana. Dia tetap hidup di kenangan dan cerita lucu kalian.",
+ "Walau jauh, aku selalu ada di chat. Mau cerita, curhat, ngomel, atau kirim meme, bebas!",
+ "Kamu lebih kuat dari yang kamu kira, dan tetap boleh istirahat kapan pun kamu mau.",
+ "Kalau lagi nggak baik-baik aja, itu manusiawi banget. Besok kita coba lagi bareng-bareng ya."
+];
+var quips = ["Meong! Satu pelukan virtual, gratis.","Geli tau! Tapi aku suka.","Aku lagi ngitung betapa kamu disayang… hasilnya nggak habis-habis.","Purr purr… kamu hebat hari ini.","Kata Mochi: ketawa dikit, yuk!"];
+var words = ["Peluk!","Kamu hebat","Sayang kamu","Kamu berharga","Ada aku","Semangat ya","Kamu dicintai","Pelan-pelan aja"];
+var tasks = ["Minum segelas air","Makan sesuatu yang enak","Dengerin lagu favorit","Keluar sebentar cari udara segar","Telepon atau chat aku"];
+var i = 0, nm = NAMA_PENERIMA.trim();
+
+// latar melayang
+var em = ["⭐","☁️","🌸","✨","🎈","💛","🌈"], bg = $("bg");
+for (var k=0;k<14;k++){var s=document.createElement("span");s.textContent=em[k%em.length];s.style.left=(Math.random()*95)+"%";s.style.top=(Math.random()*95)+"%";s.style.animationDelay=(-Math.random()*8)+"s";s.style.fontSize=(20+Math.random()*22)+"px";bg.appendChild(s)}
+
+// confetti
+var cv=$("cv"),cx=cv.getContext("2d"),ps=[],W,H;
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}size();addEventListener("resize",size);
+function confetti(n){var c=["#FF7DA8","#FFC83D","#8FDDBE","#8CCBFF","#B79CFF"];
+ for(var k=0;k<n;k++)ps.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-4,r:Math.random()*6+4,c:c[k%5],a:Math.random()*6,l:140});
+ if(ps.length===n)loop()}
+function loop(){cx.clearRect(0,0,W,H);ps=ps.filter(function(p){return p.l>0});
+ ps.forEach(function(p){p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;p.l--;cx.globalAlpha=Math.min(1,p.l/40);cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore()});
+ if(ps.length)requestAnimationFrame(loop);else cx.clearRect(0,0,W,H)}
+
+// hati
+function hearts(n){var h=["💛","💖","🧡","💗","🌟"];
+ for(var k=0;k<n;k++)(function(k){setTimeout(function(){var e=document.createElement("div");e.className="heart";e.textContent=h[k%5];
+ e.style.left=(10+Math.random()*80)+"vw";e.style.bottom="8vh";e.style.setProperty("--dx",(Math.random()*80-40)+"px");e.style.setProperty("--r",(Math.random()*60-30)+"deg");
+ document.body.appendChild(e);setTimeout(function(){e.remove()},2300)},k*90)})(k)}
+
+// buka kado
+function openGift(){
+ $("gift").classList.add("open");confetti(160);
+ setTimeout(function(){$("s1").classList.remove("on");$("s2").classList.add("on");scrollTo(0,0);say(0)},900)}
+$("gift").onclick=$("openBtn").onclick=openGift;
+
+// pesan
+var dots=$("dots");msgs.forEach(function(){dots.appendChild(document.createElement("i"))});
+function say(n){i=n%msgs.length;var p=$("say");p.textContent=msgs[i];p.style.animation="none";void p.offsetWidth;p.style.animation="";
+ [].forEach.call(dots.children,function(d,j){d.classList.toggle("on",j===i)})}
+$("next").onclick=function(){say(i+1);hearts(4)};
+$("cat").onclick=function(){var c=$("cat");c.classList.remove("hop");void c.offsetWidth;c.classList.add("hop");
+ var p=$("say");p.textContent=quips[Math.floor(Math.random()*quips.length)];hearts(5)};
+$("hug").onclick=function(){hearts(24);confetti(40);$("say").textContent="Peluk eraaat dari jauh! Sampai ya, hangatnya."};
+$("party").onclick=function(){confetti(220);hearts(18)};
+
+// balon
+var cols=["#FF7DA8","#FFC83D","#8FDDBE","#8CCBFF","#B79CFF","#FF9F68"],sky=$("sky");
+words.slice(0,6).forEach(function(w,k){var b=document.createElement("button");b.className="bal";b.style.background=cols[k];b.setAttribute("aria-label","Pecahin balon");
+ b.onclick=function(){b.classList.add("pop");b.disabled=true;$("balmsg").textContent=w+(nm?", "+nm:"")+"!";confetti(30);hearts(3)};sky.appendChild(b)});
+
+// daftar
+var list=$("list");tasks.forEach(function(t){var l=document.createElement("label");l.className="chk";
+ l.innerHTML='<input type="checkbox"><span></span>';l.querySelector("span").textContent=t;
+ l.querySelector("input").onchange=function(e){if(e.target.checked){hearts(5);confetti(25)}};list.appendChild(l)});
+
+if(nm)$("hello").textContent="Halo "+nm+"! Aku Mochi";
+if(NAMA_PENGIRIM.trim())$("sign").textContent="Dengan sayang, "+NAMA_PENGIRIM.trim()+" 💛";
+else $("sign").textContent="Dengan sayang, dari orang yang peduli sama kamu 💛";
+</script>
+</body>
+</html>
